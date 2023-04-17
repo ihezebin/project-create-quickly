@@ -46,10 +46,11 @@ var app = cli.NewApp(
 			builder = build.NewDDDBuilder(origin)
 			mnSplit := strings.Split(projectName, "/")
 			outProjectName = mnSplit[len(mnSplit)-1]
-			fmt.Printf("\nProject name: %s, Mod name: %s\n\n", outProjectName, projectName)
+			fmt.Printf("\nGolang project name: %s, Mod name: %s\n\n", outProjectName, projectName)
 		case "react":
 			builder = build.NewReactTsBuilder(origin)
-			fmt.Printf("\nProject name: %s\n\n", projectName)
+			outProjectName = projectName
+			fmt.Printf("\nReact project name: %s\n\n", projectName)
 		default:
 			return errors.Errorf("template type %s is not supported", template)
 		}

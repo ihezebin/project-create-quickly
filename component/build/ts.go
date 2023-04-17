@@ -1,6 +1,11 @@
 package build
 
-import "github.com/ihezebin/project-create-quickly/component/rename"
+import (
+	"github.com/ihezebin/project-create-quickly/component/rename"
+	"github.com/pkg/errors"
+	"os/exec"
+	"path/filepath"
+)
 
 type ReactTsBuilder struct {
 	Origin string
@@ -19,7 +24,16 @@ func NewReactTsBuilder(origin string) *ReactTsBuilder {
 }
 
 func (b *ReactTsBuilder) Build(projectName string) error {
-	return cloneGitProject(b.Origin, projectName)
+	if err := cloneGitProject(b.Origin, projectName); err != nil {
+		return err
+	}
+	// 删除.git 等文件，保持文件目录结构整洁
+	if err := exec.Command("rm", "-rf",
+		filepath.Join(workDir, projectName, ".git"),
+	).Run(); err != nil {
+		return errors.Wrap(err, "remove redundant files err")
+	}
+	return nil
 }
 
 func (b *ReactTsBuilder) Rename(newProjectName string) error {

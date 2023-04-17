@@ -2,7 +2,7 @@
 快速创建模板项目的脚本命令行程序，根据git代码仓库，快速将仓库拉下来，并根据项目类型，完成对应的初始化操作。
 # 编译
 ```bash
-go build -o pcq main.golang
+go build -o pcq main.go
 ```
 
 # 执行
