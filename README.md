@@ -6,9 +6,13 @@ go build -o pcq main.go
 ```
 
 # 执行
-脚本支持功能和对应命令用法:
+
 ```bash
 pcq -t go github.com/ihezbien/test
+```
+脚本已同时发布到npm，在安装有nodejs的环境下，可以通过npx使用
+```bash
+npx pqc -t react test
 ```
 
 ```bash
