@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"gitee.com/ihezebin/quick-create-project/component/build"
+	"github.com/ihezebin/project-create-quickly/component/build"
 	"github.com/ihezebin/sdk/cli"
 	"github.com/pkg/errors"
 	"strings"
@@ -15,17 +15,17 @@ func Run() error {
 
 var app = cli.NewApp(
 	cli.WithVersion("v1.0"),
-	cli.WithName("qcp"),
+	cli.WithName("pcq"),
 	cli.WithAuthor("hezebin"),
-	cli.WithUsage("A script to init template project quickly"),
+	cli.WithUsage("A script to create and init template project quickly"),
 	cli.WithDescription("This application relies on Git"),
-	cli.WithUsageText("qcp <project name> [-t | --template=<value>] [--git] [-o | --origin=<value>]"),
+	cli.WithUsageText("pcq <project name> [-t | --template=<value>] [--git] [-o | --origin=<value>]"),
 ).
 	WithFlagString("template, t", "", "point the template of project which you want to create", false).
 	WithFlagString("origin, o", "", "Customize a git repository url", false).
 	WithAction(func(v cli.Value) error {
 		if v.NArg() != 1 {
-			return errors.New("Args num must be 1, use qcp -h to get help")
+			return errors.New("Args num must be 1, use pcq -h to get help")
 		}
 
 		projectName := v.Args().Get(0)

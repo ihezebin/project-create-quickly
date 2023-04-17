@@ -1,4 +1,4 @@
-module gitee.com/ihezebin/quick-create-project
+module github.com/ihezebin/project-create-quickly
 
 go 1.18
 

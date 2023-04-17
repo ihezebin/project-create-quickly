@@ -10,6 +10,6 @@ var versionCmd = command.NewCommand(
 	command.WithUsage("Just print the version."),
 ).WithAction(func(v command.Value) error {
 	version := v.Kernel().App.Version
-	fmt.Println("qcp version", version)
+	fmt.Println("pcq version", version)
 	return nil
 })

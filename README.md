@@ -2,13 +2,13 @@
 快速创建模板项目的脚本命令行程序，根据git代码仓库，快速将仓库拉下来，并根据项目类型，完成对应的初始化操作。
 # 编译
 ```bash
-go build -o qcp main.golang
+go build -o pcq main.golang
 ```
 
 # 执行
 脚本支持功能和对应命令用法:
 ```bash
-qcp -t go github.com/ihezbien/test
+pcq -t go github.com/ihezbien/test
 ```
 
 ```bash

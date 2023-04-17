@@ -1,7 +1,7 @@
 package build
 
 import (
-	"gitee.com/ihezebin/quick-create-project/component/rename"
+	"github.com/ihezebin/project-create-quickly/component/rename"
 	"github.com/pkg/errors"
 	"os/exec"
 	"path/filepath"
@@ -12,7 +12,7 @@ type DDDBuilder struct {
 	Origin string
 }
 
-const defaultDDDOrigin = "https://gitee.com/ihezebin/web-template-ddd.git"
+const defaultDDDOrigin = "https://gitee.com/ihezebin/go-template-ddd.git"
 
 func NewDDDBuilder(origin string) *DDDBuilder {
 	if origin == "" {
@@ -49,7 +49,7 @@ func (b *DDDBuilder) Build(projectName string) error {
 
 func (b *DDDBuilder) Rename(newProjectName string) error {
 	// 如果项目名是mod名，则取最后一个路径名为项目名
-	const defaultOldName = "github.com/ihezebin/web-template-ddd"
+	const defaultOldName = "github.com/ihezebin/go-template-ddd"
 	// 如果项目名是mod名，则取最后一个路径名为项目名
 	modName := newProjectName
 	if strings.Contains(newProjectName, "/") {
