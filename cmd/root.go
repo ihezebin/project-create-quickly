@@ -21,8 +21,8 @@ var app = cli.NewApp(
 	cli.WithDescription("This application relies on Git"),
 	cli.WithUsageText("pcq <project name> [-t | --template=<value>] [--git] [-o | --origin=<value>]"),
 ).
-	WithFlagString("template, t", "", "point the template of project which you want to create", false).
-	WithFlagString("origin, o", "", "Customize a git repository url", false).
+	WithFlagString("template, t", "", "point the template of project which you want to create, support: react、go", false).
+	WithFlagString("origin, o", "", "customize a git repository url", false).
 	WithAction(func(v cli.Value) error {
 		if v.NArg() != 1 {
 			return errors.New("Args num must be 1, use pcq -h to get help")
