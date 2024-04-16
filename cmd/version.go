@@ -2,14 +2,17 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/ihezebin/sdk/cli/command"
+
+	"github.com/urfave/cli/v2"
 )
 
-var versionCmd = command.NewCommand(
-	command.WithName("version"),
-	command.WithUsage("Just print the version."),
-).WithAction(func(v command.Value) error {
-	version := v.Kernel().App.Version
-	fmt.Println("pcq version", version)
-	return nil
-})
+var versionCmd = &cli.Command{
+	Name:    "version",
+	Aliases: []string{"v"},
+	Usage:   "Just print the version.",
+	Action: func(v *cli.Context) error {
+		version := v.App.Version
+		fmt.Println("pcq version", version)
+		return nil
+	},
+}
