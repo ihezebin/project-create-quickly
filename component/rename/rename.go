@@ -2,11 +2,11 @@ package rename
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/pkg/errors"
 )
 
 var workDir string
@@ -16,8 +16,11 @@ func init() {
 }
 
 func Rename(dir string, oldName, newName string) error {
+	oldNameSuffix := filepath.Base(oldName)
+	newNameSuffix := filepath.Base(newName)
+
 	aimDir := filepath.Join(workDir, dir)
-	files, err := ioutil.ReadDir(aimDir)
+	files, err := os.ReadDir(aimDir)
 	if err != nil {
 		return errors.Wrapf(err, "read dir err, dir: %s", aimDir)
 	}
@@ -31,12 +34,13 @@ func Rename(dir string, oldName, newName string) error {
 				return err
 			}
 		} else {
-			data, err := ioutil.ReadFile(path)
+			data, err := os.ReadFile(path)
 			if err != nil {
 				return err
 			}
 			str := strings.ReplaceAll(string(data), oldName, newName)
-			err = ioutil.WriteFile(path, []byte(str), os.ModePerm)
+			str = strings.ReplaceAll(str, oldNameSuffix, newNameSuffix)
+			err = os.WriteFile(path, []byte(str), os.ModePerm)
 			if err != nil {
 				return err
 			}

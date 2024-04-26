@@ -15,7 +15,7 @@ func Run() error {
 
 	app := &cli.App{
 		Name:        "pcq",
-		Version:     "v1.0.1",
+		Version:     "v1.0.2",
 		Usage:       "A script to create and init template project quickly",
 		UsageText:   "pcq <project name> [-t | --template=<value>] [--git] [-o | --origin=<value>]",
 		Description: "This application relies on Git",
