@@ -16,16 +16,21 @@ type Builder interface {
 }
 
 type BaseBuilder struct {
-	WorkDir             string
-	ProjectName         string
-	ReplaceContentTable map[string]string
+	WorkDir     string
+	ProjectName string
+	Renames     []RenameKv
 }
 
-func NewBaseBuilder(workDir, projectName string, renameTable map[string]string) *BaseBuilder {
+type RenameKv struct {
+	Old string
+	New string
+}
+
+func NewBaseBuilder(workDir, projectName string, renames ...RenameKv) *BaseBuilder {
 	return &BaseBuilder{
-		WorkDir:             workDir,
-		ProjectName:         projectName,
-		ReplaceContentTable: renameTable,
+		WorkDir:     workDir,
+		ProjectName: projectName,
+		Renames:     renames,
 	}
 }
 
@@ -52,8 +57,8 @@ func (b *BaseBuilder) Build() error {
 		if err != nil {
 			return errors.Wrapf(err, "read file %s err", path)
 		}
-		for oldContent, newContent := range b.ReplaceContentTable {
-			data = []byte(strings.ReplaceAll(string(data), oldContent, newContent))
+		for _, rename := range b.Renames {
+			data = []byte(strings.ReplaceAll(string(data), rename.Old, rename.New))
 		}
 		err = os.WriteFile(path, data, os.ModePerm)
 		if err != nil {

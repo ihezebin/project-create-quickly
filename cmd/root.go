@@ -29,7 +29,7 @@ func Run() error {
 
 	app := &cli.App{
 		Name:        "pcq",
-		Version:     "v1.0.3",
+		Version:     "v1.0.4",
 		Usage:       "A script to create and init template project quickly",
 		UsageText:   "pcq [-t | --template=<value>] [-r | --repository=<value>] <project name>",
 		Description: "This application relies on Git",
@@ -86,8 +86,8 @@ func Run() error {
 				b = builder.NewGoDDDBuilder(workDir, projectName, modName)
 			case constant.TemplateCraTs:
 				fmt.Printf("\nReact Cra Ts project name: %s\n\n", projectName)
-				b = builder.NewBaseBuilder(workDir, projectName, map[string]string{
-					"react-template-ts": projectName,
+				b = builder.NewBaseBuilder(workDir, projectName, builder.RenameKv{
+					Old: "react-template-ts", New: projectName,
 				})
 			}
 

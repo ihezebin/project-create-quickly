@@ -18,10 +18,12 @@ func NewGoDDDBuilder(workDir, projectName, modName string) *GoDDDBuilder {
 
 	return &GoDDDBuilder{
 		ModName: modName,
-		BaseBuilder: NewBaseBuilder(workDir, projectName, map[string]string{
-			templateModName:            modName,
-			path.Base(templateModName): projectName,
-		}),
+		BaseBuilder: NewBaseBuilder(workDir, projectName,
+			RenameKv{
+				Old: templateModName, New: modName,
+			}, RenameKv{
+				Old: path.Base(templateModName), New: projectName,
+			}),
 	}
 }
 
