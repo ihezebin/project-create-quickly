@@ -9,6 +9,7 @@ go build -o pcq main.go
 
 ```bash
 pcq -t go github.com/ihezbien/test
+#pcq -t vite test
 ```
 脚本已同时发布到npm，在安装有nodejs的环境下，可以通过npx使用
 ```bash

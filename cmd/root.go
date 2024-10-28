@@ -85,12 +85,12 @@ func Run() error {
 				fmt.Printf("\nGolang DDD project name: %s, Mod name: %s\n\n", projectName, modName)
 				b = builder.NewGoDDDBuilder(workDir, projectName, modName)
 			case constant.TemplateCraTs:
-				fmt.Printf("\nReact Cra Ts project name: %s\n\n", projectName)
+				fmt.Printf("\nReact Cra TS project name: %s\n\n", projectName)
 				b = builder.NewBaseBuilder(workDir, projectName, builder.RenameKv{
 					Old: "react-template-ts", New: projectName,
 				})
 			case constant.TemplateVite:
-				fmt.Printf("\nReact Vite project name: %s\n\n", projectName)
+				fmt.Printf("\nReact Vite TS project name: %s\n\n", projectName)
 				b = builder.NewBaseBuilder(workDir, projectName, builder.RenameKv{
 					Old: "react-template-vite", New: projectName,
 				})
