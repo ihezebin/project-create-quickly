@@ -33,7 +33,7 @@ func Run() error {
 		Name:        "pcq",
 		Version:     "v1.0.6",
 		Usage:       "A script to create and init template project quickly",
-		UsageText:   "pcq [-t | --template=<value>] [-r | --repository=<value>] <project name>",
+		UsageText:   "pcq [-t | --template=<value>] [-r | --repository=<value>] <project name> \n\njava-ddd's <project name> can be 'com.domain.project' or 'project', go-ddd's <project name> can be 'github.com/user/project' or 'project'",
 		Description: "This application relies on Git",
 		Authors: []*cli.Author{
 			{Name: "hezebin", Email: "ihezebin@qq.com"},
@@ -42,7 +42,7 @@ func Run() error {
 			&cli.StringFlag{
 				Name: "template", Aliases: []string{"t"},
 				Value:       "",
-				Usage:       fmt.Sprintf("point the template of project which you want to create, support: %s. java-ddd can be 'com.domain.project' or 'project', go-ddd can be 'github.com/user/project' or 'project'", strings.Join(constant.SupportTemplates, "、")),
+				Usage:       fmt.Sprintf("point the template of project which you want to create, support: %s.", strings.Join(constant.SupportTemplates, "、")),
 				Required:    true,
 				Destination: &template,
 			},
