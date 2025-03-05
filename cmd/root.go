@@ -5,6 +5,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 
@@ -30,7 +31,7 @@ func Run() error {
 
 	app := &cli.App{
 		Name:        "pcq",
-		Version:     "v1.0.5",
+		Version:     "v1.0.6",
 		Usage:       "A script to create and init template project quickly",
 		UsageText:   "pcq [-t | --template=<value>] [-r | --repository=<value>] <project name>",
 		Description: "This application relies on Git",
@@ -41,7 +42,7 @@ func Run() error {
 			&cli.StringFlag{
 				Name: "template", Aliases: []string{"t"},
 				Value:       "",
-				Usage:       fmt.Sprintf("point the template of project which you want to create, support: %s", strings.Join(constant.SupportTemplates, "、")),
+				Usage:       fmt.Sprintf("point the template of project which you want to create, support: %s. java-ddd can be 'com.domain.project' or 'project', go-ddd can be 'github.com/user/project' or 'project'", strings.Join(constant.SupportTemplates, "、")),
 				Required:    true,
 				Destination: &template,
 			},
@@ -83,19 +84,45 @@ func Run() error {
 			case constant.TemplateGoDDD:
 				modName := projectName
 				projectName = path.Base(projectName)
+				// project 只能包含字母、数字、下划线、中划线，且不能以数字开头
+				if matched, err := regexp.MatchString("^[a-zA-Z][a-zA-Z0-9_-]+$", projectName); !matched || err != nil {
+					return errors.New("project name can only contain letters, numbers, underscores, and hyphens, and must not start with a number")
+				}
 				fmt.Printf("\nGolang DDD project name: %s, Mod name: %s\n\n", projectName, modName)
 				b = builder.NewGoDDDBuilder(workDir, projectName, modName)
 			case constant.TemplateCraTs:
+				// project 只能包含字母、数字、下划线、中划线，且不能以数字开头
+				if matched, err := regexp.MatchString("^[a-zA-Z][a-zA-Z0-9_-]+$", projectName); !matched || err != nil {
+					return errors.New("project name can only contain letters, numbers, underscores, and hyphens, and must not start with a number")
+				}
 				fmt.Printf("\nReact Cra TS project name: %s\n\n", projectName)
 				b = builder.NewBaseBuilder(workDir, projectName, builder.RenameKv{
 					Old: "react-template-ts", New: projectName,
 				})
 			case constant.TemplateVite:
+				// project 只能包含字母、数字、下划线、中划线，且不能以数字开头
+				if matched, err := regexp.MatchString("^[a-zA-Z][a-zA-Z0-9_-]+$", projectName); !matched || err != nil {
+					return errors.New("project name can only contain letters, numbers, underscores, and hyphens, and must not start with a number")
+				}
 				fmt.Printf("\nReact Vite TS project name: %s\n\n", projectName)
 				b = builder.NewBaseBuilder(workDir, projectName, builder.RenameKv{
 					Old: "react-template-vite", New: projectName,
 				})
 			case constant.TemplateJavaDDD:
+				groupName := projectName
+				groupNames := strings.Split(groupName, ".")
+				if len(groupNames) != 3 && len(groupNames) > 1 {
+					return errors.New("group name must be like 'com.example.project'")
+				}
+
+				if len(groupNames) == 3 {
+					projectName = groupNames[2]
+				}
+				// project 只能包含字母、数字、下划线，不包含中划线，且不能以数字开头，数字和划线不是必须的
+				if matched, err := regexp.MatchString("^[a-zA-Z][a-zA-Z0-9_]+$", projectName); !matched || err != nil {
+					return errors.New("project name can only contain letters, numbers, underscores, and must not start with a number")
+				}
+
 				fmt.Printf("\nJava DDD project name: %s\n\n", projectName)
 
 				// 新项目名不能是 test
@@ -103,11 +130,31 @@ func Run() error {
 					return errors.New("project name can not be 'test'")
 				}
 
-				b = builder.NewBaseBuilder(workDir, projectName, builder.RenameKv{
-					Old: "java-template-ddd", New: projectName,
-				}, builder.RenameKv{
-					Old: "template", New: projectName,
-				})
+				kvs := []builder.RenameKv{
+					{
+						Old: "java-template-ddd", New: projectName,
+					},
+					{
+						Old: "template", New: projectName,
+					},
+				}
+
+				if len(groupNames) == 3 {
+					comNew := groupNames[0]
+					hezebinNew := groupNames[1]
+					comHezebinNew := groupNames[0] + "." + groupNames[1]
+					kvs = append(kvs, builder.RenameKv{
+						Old: "com.hezebin", New: comHezebinNew,
+					})
+					kvs = append(kvs, builder.RenameKv{
+						Old: "com", New: comNew, JustDir: true,
+					})
+					kvs = append(kvs, builder.RenameKv{
+						Old: "hezebin", New: hezebinNew, JustDir: true,
+					})
+				}
+
+				b = builder.NewBaseBuilder(workDir, projectName, kvs...)
 			}
 
 			// 判断目录是否存在, 已存在为了防止覆盖原目录，直接报错

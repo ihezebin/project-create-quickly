@@ -22,8 +22,9 @@ type BaseBuilder struct {
 }
 
 type RenameKv struct {
-	Old string
-	New string
+	Old     string
+	New     string
+	JustDir bool
 }
 
 func NewBaseBuilder(workDir, projectName string, renames ...RenameKv) *BaseBuilder {
@@ -61,6 +62,9 @@ func (b *BaseBuilder) Build() error {
 			return errors.Wrapf(err, "read file %s err", path)
 		}
 		for _, rename := range b.Renames {
+			if rename.JustDir {
+				continue
+			}
 			data = []byte(strings.ReplaceAll(string(data), rename.Old, rename.New))
 		}
 		err = os.WriteFile(path, data, os.ModePerm)
@@ -76,13 +80,15 @@ func (b *BaseBuilder) Build() error {
 		return errors.Wrapf(err, "walk %s err", path)
 	}
 
-	// rename dirs
-	for _, dirPath := range dirPaths {
+	// rename dirs, 逆序遍历
+	for i := len(dirPaths) - 1; i >= 0; i-- {
+		dirPath := dirPaths[i]
 		for _, rename := range b.Renames {
 			// 从路径中提取文件名和 old 比较
 			if filepath.Base(dirPath) == rename.Old {
-				// 如果目录名是Old，则重命名
-				newDirPath := strings.ReplaceAll(dirPath, rename.Old, rename.New)
+				// 如果目录名是Old，则重命名，只重命名最后一部分
+				// newDirPath := strings.ReplaceAll(dirPath, rename.Old, rename.New)
+				newDirPath := filepath.Join(filepath.Dir(dirPath), rename.New)
 				err = os.Rename(dirPath, newDirPath)
 				if err != nil {
 					return errors.Wrapf(err, "rename %s to %s err", dirPath, newDirPath)

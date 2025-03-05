@@ -1,0 +1,85 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: haha
+  datasource:
+    url: jdbc:mysql://localhost:3306/haha?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    enabled: true
+    locations: classpath:migration
+    baseline-on-migrate: true
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+
+mongodb:
+  uri: mongodb://root:root@localhost:27017/haha?authSource=admin
+
+redis:
+  host: localhost
+  port: 6379
+  password: root
+  database: 0
+  timeout: 10000ms
+  pool:
+    max-active: 50
+    max-idle: 10
+    min-idle: 5
+    max-wait: 10000ms
+
+elasticsearch:
+  uris: http://localhost:9200
+  # 如果有认证则添加以下配置
+  # username: elastic
+  # password: changeme
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+# 添加日志配置
+logging:
+  # 日志文件路径
+  file:
+    path: ./logs
+    name: ${logging.file.path}/${spring.application.name}.log
+  # 日志级别配置
+  level:
+    root: INFO
+    org.domain.haha: DEBUG
+  # 日志格式配置
+  pattern:
+    # 文件输出为JSON格式
+    file: '{"timestamp":"%d{yyyy-MM-dd HH:mm:ss.SSS}","level":"%p","pid":"${PID}","thread":"%t","class":"%logger{39}","trace_id":"%X{traceId}","message":"%m","stack_trace":"%wEx"}%n'
+  # 日志轮转配置
+  logback:
+    rollingpolicy:
+      # 单个日志文件最大大小
+      max-file-size: 10MB
+      # 保留的日志文件天数
+      max-history: 1
+      # 日志文件总大小上限
+      total-size-cap: 1GB
+      # 日志文件名格式
+      file-name-pattern: ${logging.file.path}/archived/application.%d{yyyy-MM-dd}.%i.log
+      # 是否在启动时清理历史日志
+      clean-history-on-start: false
+
+worker:
+  enabled: false
+
+cron:
+  enabled: false
+
+customize:
+  a: 1
+  b: 2
+
+example:
+  service:
+    base-url: http://example-service:8080
