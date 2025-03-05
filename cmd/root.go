@@ -9,10 +9,11 @@ import (
 	"time"
 
 	"github.com/go-git/go-git/v5"
-	"github.com/ihezebin/project-create-quickly/internal/builder"
-	"github.com/ihezebin/project-create-quickly/internal/constant"
 	"github.com/pkg/errors"
 	"github.com/urfave/cli/v2"
+
+	"github.com/ihezebin/project-create-quickly/internal/builder"
+	"github.com/ihezebin/project-create-quickly/internal/constant"
 )
 
 var (
@@ -93,6 +94,19 @@ func Run() error {
 				fmt.Printf("\nReact Vite TS project name: %s\n\n", projectName)
 				b = builder.NewBaseBuilder(workDir, projectName, builder.RenameKv{
 					Old: "react-template-vite", New: projectName,
+				})
+			case constant.TemplateJavaDDD:
+				fmt.Printf("\nJava DDD project name: %s\n\n", projectName)
+
+				// 新项目名不能是 test
+				if strings.Contains(projectName, "test") {
+					return errors.New("project name can not be 'test'")
+				}
+
+				b = builder.NewBaseBuilder(workDir, projectName, builder.RenameKv{
+					Old: "java-template-ddd", New: projectName,
+				}, builder.RenameKv{
+					Old: "template", New: projectName,
 				})
 			}
 

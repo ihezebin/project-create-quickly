@@ -44,12 +44,15 @@ func (b *BaseBuilder) Build() error {
 
 	fmt.Println("Renaming project files...     ")
 
+	dirPaths := make([]string, 0)
+
 	path := filepath.Join(b.WorkDir, b.ProjectName)
 	err := filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 		if info.IsDir() {
+			dirPaths = append(dirPaths, path)
 			return nil
 		}
 
@@ -65,12 +68,30 @@ func (b *BaseBuilder) Build() error {
 			return errors.Wrapf(err, "write file %s err", path)
 		}
 		rel, _ := filepath.Rel(b.WorkDir, path)
-		fmt.Println("[Renamed!] ", rel)
+		fmt.Println("[Renamed File Content!] ", rel)
 
 		return nil
 	})
 	if err != nil {
 		return errors.Wrapf(err, "walk %s err", path)
+	}
+
+	// rename dirs
+	for _, dirPath := range dirPaths {
+		for _, rename := range b.Renames {
+			// 从路径中提取文件名和 old 比较
+			if filepath.Base(dirPath) == rename.Old {
+				// 如果目录名是Old，则重命名
+				newDirPath := strings.ReplaceAll(dirPath, rename.Old, rename.New)
+				err = os.Rename(dirPath, newDirPath)
+				if err != nil {
+					return errors.Wrapf(err, "rename %s to %s err", dirPath, newDirPath)
+				}
+				oldRel, _ := filepath.Rel(b.WorkDir, dirPath)
+				newRel, _ := filepath.Rel(b.WorkDir, newDirPath)
+				fmt.Printf("[Renamed Dir Name!] %s -> %s\n", oldRel, newRel)
+			}
+		}
 	}
 
 	return nil
