@@ -7,6 +7,7 @@ const (
 	defaultCraTsRepository   = "http://gitee.com/hezebin-react/react-template-ts.git"
 	defaultViteRepository    = "https://gitee.com/hezebin-react/react-template-vite.git"
 	defaultJavaDDDRepository = "http://gitee.com/hezebin-go/java-template-ddd.git"
+	defaultTaroRepository    = "https://gitee.com/hezebin-wechat/wechat-template-taro.git"
 )
 
 var template2RepositoryTable = map[string]string{
@@ -14,6 +15,7 @@ var template2RepositoryTable = map[string]string{
 	TemplateCraTs:   defaultCraTsRepository,
 	TemplateVite:    defaultViteRepository,
 	TemplateJavaDDD: defaultJavaDDDRepository,
+	TemplateTaro:    defaultTaroRepository,
 }
 
 func GetDefaultRepository(template string) (string, error) {

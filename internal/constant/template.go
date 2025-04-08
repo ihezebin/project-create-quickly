@@ -5,6 +5,7 @@ const (
 	TemplateCraTs   = "cra-ts"
 	TemplateVite    = "vite"
 	TemplateJavaDDD = "java-ddd"
+	TemplateTaro    = "taro"
 )
 
 var SupportTemplates = []string{
@@ -12,4 +13,5 @@ var SupportTemplates = []string{
 	TemplateCraTs,
 	TemplateVite,
 	TemplateJavaDDD,
+	TemplateTaro,
 }
