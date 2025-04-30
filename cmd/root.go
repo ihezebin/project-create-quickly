@@ -31,7 +31,7 @@ func Run() error {
 
 	app := &cli.App{
 		Name:        "pcq",
-		Version:     "v1.0.6",
+		Version:     "v1.0.7",
 		Usage:       "A script to create and init template project quickly",
 		UsageText:   "pcq [-t | --template=<value>] [-r | --repository=<value>] <project name> \n\njava-ddd's <project name> can be 'com.domain.project' or 'project', go-ddd's <project name> can be 'github.com/user/project' or 'project'",
 		Description: "This application relies on Git",
@@ -116,6 +116,16 @@ func Run() error {
 				fmt.Printf("\nTaro project name: %s\n\n", projectName)
 				b = builder.NewBaseBuilder(workDir, projectName, builder.RenameKv{
 					Old: "wechat-template-taro", New: projectName,
+				})
+			case constant.TemplateElectron:
+				// project 只能包含字母、数字、下划线、中划线，且不能以数字开头
+				if matched, err := regexp.MatchString("^[a-zA-Z][a-zA-Z0-9_-]+$", projectName); !matched || err != nil {
+					return errors.New("project name can only contain letters, numbers, underscores, and hyphens, and must not start with a number")
+				}
+				fmt.Printf("\nElectron project name: %s\n\n", projectName)
+
+				b = builder.NewBaseBuilder(workDir, projectName, builder.RenameKv{
+					Old: "electron-template-vite", New: projectName,
 				})
 			case constant.TemplateJavaDDD:
 				groupName := projectName

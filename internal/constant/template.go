@@ -1,11 +1,12 @@
 package constant
 
 const (
-	TemplateGoDDD   = "go-ddd"
-	TemplateCraTs   = "cra-ts"
-	TemplateVite    = "vite"
-	TemplateJavaDDD = "java-ddd"
-	TemplateTaro    = "taro"
+	TemplateGoDDD    = "go-ddd"
+	TemplateCraTs    = "cra-ts"
+	TemplateVite     = "vite"
+	TemplateJavaDDD  = "java-ddd"
+	TemplateTaro     = "taro"
+	TemplateElectron = "electron"
 )
 
 var SupportTemplates = []string{
@@ -14,4 +15,5 @@ var SupportTemplates = []string{
 	TemplateVite,
 	TemplateJavaDDD,
 	TemplateTaro,
+	TemplateElectron,
 }
