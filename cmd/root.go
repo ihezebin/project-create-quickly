@@ -31,7 +31,7 @@ func Run() error {
 
 	app := &cli.App{
 		Name:        "pcq",
-		Version:     "v1.0.7",
+		Version:     "v1.0.8",
 		Usage:       "A script to create and init template project quickly",
 		UsageText:   "pcq [-t | --template=<value>] [-r | --repository=<value>] <project name> \n\njava-ddd's <project name> can be 'com.domain.project' or 'project', go-ddd's <project name> can be 'github.com/user/project' or 'project'",
 		Description: "This application relies on Git",

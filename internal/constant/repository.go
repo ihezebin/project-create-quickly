@@ -7,7 +7,7 @@ const (
 	defaultCraTsRepository    = "http://gitee.com/hezebin-react/react-template-ts.git"
 	defaultViteRepository     = "https://gitee.com/hezebin-react/react-template-vite.git"
 	defaultJavaDDDRepository  = "http://gitee.com/hezebin-go/java-template-ddd.git"
-	defaultTaroRepository     = "https://gitee.com/hezebin-wechat/wechat-template-taro.git"
+	defaultTaroRepository     = "https://github.com/ihezebin/wechat-template-taro.git"
 	defaultElectronRepository = "https://gitee.com/hezebin-electron/electron-template-vite.git"
 )
 
