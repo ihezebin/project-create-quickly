@@ -3,7 +3,7 @@ package constant
 import "fmt"
 
 const (
-	defaultGoDDDRepository    = "http://gitee.com/hezebin-go/go-template-ddd.git"
+	defaultGoDDDRepository    = "https://github.com/ihezebin/go-template-ddd.git"
 	defaultCraTsRepository    = "http://gitee.com/hezebin-react/react-template-ts.git"
 	defaultViteRepository     = "https://gitee.com/hezebin-react/react-template-vite.git"
 	defaultJavaDDDRepository  = "http://gitee.com/hezebin-go/java-template-ddd.git"
