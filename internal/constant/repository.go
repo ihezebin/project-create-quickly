@@ -4,11 +4,11 @@ import "fmt"
 
 const (
 	defaultGoDDDRepository    = "https://github.com/ihezebin/go-template-ddd.git"
-	defaultCraTsRepository    = "http://gitee.com/hezebin-react/react-template-ts.git"
-	defaultViteRepository     = "https://gitee.com/hezebin-react/react-template-vite.git"
-	defaultJavaDDDRepository  = "http://gitee.com/hezebin-go/java-template-ddd.git"
+	defaultCraTsRepository    = "https://github.com/ihezebin/react-template-ts.git"
+	defaultViteRepository     = "https://github.com/ihezebin/react-template-vite.git"
+	defaultJavaDDDRepository  = "https://github.com/ihezebin/java-template-ddd.git"
 	defaultTaroRepository     = "https://github.com/ihezebin/wechat-template-taro.git"
-	defaultElectronRepository = "https://gitee.com/hezebin-electron/electron-template-vite.git"
+	defaultElectronRepository = "https://github.com/ihezebin/electron-template-vite.git"
 )
 
 var template2RepositoryTable = map[string]string{
